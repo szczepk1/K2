@@ -1,0 +1,185 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v3",
+        "title": "Google Drive"
+    },
+    "host": "www.googleapis.com",
+    "basePath": "/drive/v3",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/files/{fileId}": {
+            "get": {
+                "summary": "Get a file",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "fileId",
+                        "in": "path",
+                        "description": "Id of the file",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acknowledgeAbuse",
+                        "in": "query",
+                        "description": "Set to true to download any file.",
+                        "required": false,
+                        "type": "boolean",
+                        "default": "true"
+                    },
+                    {
+                        "name": "supportsAllDrives",
+                        "in": "query",
+                        "description": "Set to true.",
+                        "required": false,
+                        "type": "boolean",
+                        "default": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/FileResource"
+                        }
+                    }
+                }
+            }
+        },
+        "/files": {
+            "get": {
+                "summary": "Get File listing",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "corpora",
+                        "in": "query",
+                        "description": "Groupings of files to which the query applies. Supported groupings are: 'user' (files created by, opened by, or shared directly with the user), 'drive' (files in the specified shared drive as indicated by the 'driveId'), 'domain' (files shared to the user's domain), and 'allDrives' (A combination of 'user' and 'drive' for all drives where the user is a member). When able, use 'user' or 'drive', instead of 'allDrives', for efficiency.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "driveId",
+                        "in": "query",
+                        "description": "ID of the shared drive to search.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "includeItemsFromAllDrives",
+                        "in": "query",
+                        "description": "Set to true.",
+                        "required": false,
+                        "type": "boolean",
+                        "default": "true"
+                    },
+                    {
+                        "name": "supportsTeamDrives",
+                        "in": "query",
+                        "description": "Set to true.",
+                        "required": false,
+                        "type": "boolean",
+                        "default": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/FileResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/drives": {
+            "get": {
+                "summary": "Get Shared Drives",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/DriveResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "FileResource": {
+            "type": "object",
+            "properties": {
+                "kind": { "type": "string" },
+                "id": { "type": "string" },
+                "name": { "type": "string" }
+            }
+        },
+        "FileResponse": {
+            "type": "object",
+            "properties": {
+                "kind": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/File"
+                    }
+                },
+            }
+        },
+        "File": {
+            "type": "object",
+            "properties": {
+                "kind": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "DriveResponse": {
+            "type": "object",
+            "properties": {
+                "kind": {
+                    "type": "string"
+                },
+                "drives": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Drive"
+                    }
+                }
+            }
+        },
+        "Drive": {
+            "type": "object",
+            "properties": {
+                "kind": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
